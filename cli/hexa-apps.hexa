@@ -1,0 +1,220 @@
+#!hexa strict
+// hexa-apps/cli/hexa-apps.hexa — standalone hexa-apps CLI router (📱)
+//
+// 5-verb application-prototypes dispatcher:
+//   camera_filter_app  hexa_filter_algebra  hexa_main_character
+//   hexa_parallel_self hexa_vsco
+
+let VERSION = "0.1.0"
+
+let HOME = env("HOME")
+let HEXA_APPS_ROOT_ENV = env("HEXA_APPS_ROOT")
+
+fn hexa_apps_root() -> str {
+    if HEXA_APPS_ROOT_ENV.len() > 0 { return HEXA_APPS_ROOT_ENV }
+    let inferred = exec("dirname \"$(dirname \"$0\")\" 2>/dev/null || true").trim()
+    if inferred.len() > 0 { return inferred }
+    return HOME + "/.hexa-apps"
+}
+
+let HA = hexa_apps_root()
+let LOG_PATH = HA + "/state/hexa_apps_cli.log"
+
+// VERBS layout: [verb_name, verb_dir, primary_md_filename]
+let VERBS = [
+    ["camera_filter_app",   "camera-filter-app",   "camera-filter-app.md"],
+    ["hexa_filter_algebra", "hexa-filter-algebra", "hexa-filter-algebra.md"],
+    ["hexa_main_character", "hexa-main-character", "hexa-main-character.md"],
+    ["hexa_parallel_self",  "hexa-parallel-self",  "hexa-parallel-self.md"],
+    ["hexa_vsco",           "hexa-vsco",           "hexa-vsco.md"],
+]
+
+fn verb_spec(verb: str) -> str {
+    for row in VERBS {
+        if row[0] == verb { return HA + "/" + row[1] + "/" + row[2] }
+    }
+    return ""
+}
+
+fn shq(s: str) -> str {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn has_flag(a: [str], flag: str) -> bool {
+    for x in a {
+        if x == flag { return true }
+    }
+    return false
+}
+
+fn json_mode(a: [str]) -> bool {
+    return has_flag(a, "--json")
+}
+
+fn _ts_now() -> str { return exec("date -u '+%Y-%m-%dT%H:%M:%SZ'").trim() }
+
+fn _audit(subcmd: str, args_str: str, exit_code: int) {
+    let line = "{\"ts\":\"" + _ts_now() + "\",\"caller\":\"hexa_apps_standalone\",\"subcmd\":\"hexa-apps " +
+               subcmd + "\",\"exit_code\":" + str(exit_code) + ",\"version\":\"" + VERSION + "\"}"
+    exec("mkdir -p " + shq(HA + "/state") + " 2>/dev/null")
+    exec("echo " + shq(line) + " >> " + shq(LOG_PATH) + " 2>/dev/null")
+}
+
+fn _file_exists(p: str) -> bool {
+    let r = exec("[ -f " + shq(p) + " ] && echo yes || echo no").trim()
+    return r == "yes"
+}
+
+fn _print_caveats() {
+    println("")
+    println("--- caveats (raw#10 C3) ---")
+    println("  1. SPEC_CATALOG_ONLY at v0.1.0. 0/5 verbs ship a working app.")
+    println("  2. Specs cover camera-filter / filter-algebra / main-character /")
+    println("     parallel-self / vsco — closed-form product specs only.")
+    println("  3. Sister-rollup of hexa-mind (🧠 mental ops) / hexa-senses (👁️).")
+}
+
+fn cmd_list(a: [str]) {
+    if json_mode(a) {
+        let mut js = "{\"hexa_apps\":\"" + VERSION + "\",\"verbs_total\":5,"
+        js = js + "\"verbs\":[\"camera_filter_app\",\"hexa_filter_algebra\",\"hexa_main_character\",\"hexa_parallel_self\",\"hexa_vsco\"],"
+        js = js + "\"verdict\":\"SPEC_CATALOG_ONLY\"}"
+        println(js)
+        return
+    }
+    println("hexa-apps " + VERSION + " — 5-verb application-prototypes substrate (📱)")
+    println("")
+    println("  VERBS (5): camera_filter_app  hexa_filter_algebra  hexa_main_character")
+    println("             hexa_parallel_self  hexa_vsco")
+    println("")
+    println("  to read a verb spec:")
+    println("    hexa-apps <verb>          (prints verb spec path + first lines)")
+    println("    hexa-apps selftest        (5-verb spec presence sweep)")
+    _print_caveats()
+}
+
+fn cmd_verb(verb: str, a: [str]) {
+    let spec = verb_spec(verb)
+    if spec == "" {
+        eprintln("hexa-apps: unknown verb '" + verb + "'")
+        eprintln("run 'hexa-apps list' for the 5-verb table")
+        _audit(verb, "unknown", 2)
+        exit(2)
+    }
+    let present = _file_exists(spec)
+    println("hexa-apps " + verb + " — application-prototype (v" + VERSION + " spec)")
+    println("  spec_path: " + spec)
+    if present == false {
+        eprintln("  status: MISSING")
+        _audit(verb, "missing", 1)
+        exit(1)
+    }
+    println("  status: PRESENT")
+    println("  --- first 20 lines ---")
+    let head = exec("head -20 " + shq(spec) + " 2>/dev/null")
+    println(head.trim())
+    println("  ----------------------")
+    if json_mode(a) {
+        let mut js = "{\"hexa_apps\":\"" + VERSION + "\",\"verb\":\"" + verb + "\",\"present\":true}"
+        println(js)
+    }
+    _audit(verb, "", 0)
+}
+
+fn cmd_selftest(a: [str]) {
+    let mut ok = 0
+    let mut miss: [str] = []
+    for row in VERBS {
+        let v = row[0]
+        let spec = verb_spec(v)
+        if _file_exists(spec) { ok = ok + 1 } else { miss = miss + [v] }
+    }
+    let total = len(VERBS)
+    println("hexa-apps selftest — verb-spec presence sweep")
+    println("  total verbs: " + str(total))
+    println("  rollup:      camera_filter_app+hexa_filter_algebra+hexa_main_character+hexa_parallel_self+hexa_vsco")
+    println("  present:     " + str(ok) + "/" + str(total))
+    if ok == total {
+        println("__HEXA_APPS_SELFTEST__ PASS")
+        if json_mode(a) {
+            println("{\"hexa_apps\":\"" + VERSION + "\",\"verdict\":\"PASS\",\"present\":" + str(ok) + ",\"total\":" + str(total) + "}")
+        }
+        _print_caveats()
+        _audit("selftest", "", 0)
+        return
+    }
+    println("__HEXA_APPS_SELFTEST__ FAIL")
+    for m in miss { println("  missing: " + m) }
+    _print_caveats()
+    _audit("selftest", "", 1)
+    exit(1)
+}
+
+fn cmd_version() {
+    println("hexa-apps " + VERSION)
+    println("standalone application-prototypes library (extracted from canon@ded52144 on 2026-05-10)")
+    println("license: MIT")
+    println("repo:    https://github.com/dancinlab/hexa-apps")
+}
+
+fn cmd_help() {
+    println("hexa-apps " + VERSION + " — 5-verb application-prototypes CLI (📱)")
+    println("")
+    println("usage: hexa-apps <subcmd> [flags...]")
+    println("")
+    println("verb subcommands:")
+    println("  camera_filter_app    consumer camera filter app prototype")
+    println("  hexa_filter_algebra  6-axis filter algebra")
+    println("  hexa_main_character  main-character mode identity app")
+    println("  hexa_parallel_self   parallel-self identity multiplexer")
+    println("  hexa_vsco            VSCO-style aesthetic filter app")
+    println("")
+    println("utility subcommands:")
+    println("  list             verb table + caveats")
+    println("  selftest         5-verb spec presence sweep")
+    println("")
+    println("global flags:")
+    println("  --version        show version")
+    println("  --json           machine-parseable JSON tail")
+    println("  --help, -h       this help")
+    println("")
+    println("env:")
+    println("  HEXA_APPS_ROOT       override repo root")
+}
+
+fn main() {
+    let _raw = args()
+    let mut _sidx = -1
+    let mut _i = 0
+    while _i < _raw.len() {
+        if _raw[_i].ends_with(".hexa") { _sidx = _i; break }
+        _i = _i + 1
+    }
+    let mut _user_start = 2
+    if _sidx >= 0 { _user_start = _sidx + 1 }
+
+    let mut a: [str] = ["hexa_apps_cli", "hexa_apps_router"]
+    let mut _ua = _user_start
+    while _ua < _raw.len() {
+        a = a + [_raw[_ua]]
+        _ua = _ua + 1
+    }
+    let n = len(a)
+
+    if n < 3 { cmd_help(); return }
+
+    let sub = a[2]
+
+    if sub == "--version" || sub == "-V" || sub == "version" { cmd_version(); return }
+    if has_flag(a, "--help") || has_flag(a, "-h") { cmd_help(); return }
+    if sub == "help"      { cmd_help(); return }
+    if sub == "list"      { cmd_list(a); return }
+    if sub == "selftest"  { cmd_selftest(a); return }
+
+    if verb_spec(sub) != "" { cmd_verb(sub, a); return }
+
+    eprintln("hexa-apps: unknown subcommand '" + sub + "'")
+    eprintln("run 'hexa-apps help' or 'hexa-apps list' for usage")
+    _audit(sub, "", 2)
+    exit(2)
+}

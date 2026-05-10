@@ -1,0 +1,91 @@
+# hexa.toml — hexa-apps standalone package manifest
+#
+# 📱 HEXA-APPS — n=6 application prototypes substrate (5-verb rollup)
+# Provenance: extracted from canon@ded52144 on 2026-05-10
+#             (domains/apps/{camera-filter-app, hexa-filter-algebra,
+#              hexa-main-character, hexa-parallel-self, hexa-vsco}).
+
+[package]
+name = "hexa-apps"
+version = "0.1.0"
+entry = "cli/hexa-apps.hexa"
+description = "📱 HEXA-APPS — n=6 application prototypes substrate: camera-filter-app + hexa-filter-algebra + hexa-main-character + hexa-parallel-self + hexa-vsco. Closed-form spec catalog for consumer-grade camera/identity/filter apps grounded on σ(6)=12, τ(6)=4, φ(6)=2 number theory. Sister-rollup to hexa-mind (mental ops), hexa-senses (👁️ senses), hexa-codex (knowledge)."
+license = "MIT"
+authors = ["박민우 <nerve011235@gmail.com>"]
+repository = "https://github.com/dancinlab/hexa-apps"
+homepage = "https://github.com/dancinlab/hexa-apps"
+readme = "README.md"
+keywords = ["application-prototypes", "camera-filter", "filter-algebra", "main-character", "parallel-self", "vsco", "canon", "hexa-family", "spec-catalog"]
+categories = ["application-prototypes", "spec-catalog"]
+
+[[bin]]
+name = "hexa-apps"
+path = "cli/hexa-apps.hexa"
+
+[test]
+runner = "hexa"
+files = [
+    "tests/test_selftest.hexa",
+]
+
+[scripts]
+install = "install.hexa"
+
+# ── Verb manifest (5-verb application-prototypes rollup) ──
+verb_parent = "."
+
+[verbs]
+camera_filter_app    = ["camera-filter-app"]
+hexa_filter_algebra  = ["hexa-filter-algebra"]
+hexa_main_character  = ["hexa-main-character"]
+hexa_parallel_self   = ["hexa-parallel-self"]
+hexa_vsco            = ["hexa-vsco"]
+
+# ── Modules manifest (5 verb apps-rollup) ─────────────────
+[modules]
+apps = [
+    "camera-filter-app/camera-filter-app.md",       # consumer camera filter app prototype
+    "hexa-filter-algebra/hexa-filter-algebra.md",   # 6-axis filter algebra (compositional ops)
+    "hexa-main-character/hexa-main-character.md",   # main-character mode identity app
+    "hexa-parallel-self/hexa-parallel-self.md",     # parallel-self identity multiplexer
+    "hexa-vsco/hexa-vsco.md",                       # VSCO-style aesthetic filter app
+]
+
+[dependencies]
+hexa-lang = ">=1.0.0"
+python    = ">=3.10"   # stdlib only
+
+# ── n=6 master identity ───────────────────────────────────
+[invariants.n6]
+sigma_6           = 12
+tau_6             = 4
+phi_6             = 2
+J_2               = 24
+master_identity   = "σ(6) · φ(6) = n · τ(6) = J₂ = 24"
+verb_count        = 5
+filter_axes       = 6                # 6-axis filter algebra
+identity_modes    = 6                # main-character / parallel-self mode count
+
+# ── Closure provenance ────────────────────────────────────
+[closure]
+verbs_total       = 5
+verbs_wired       = 0
+verbs_spec        = 5
+verifiers_pass    = "TBD (initial extraction)"
+verdict           = "SPEC_CATALOG_ONLY"
+extracted_from    = "canon@ded52144 on 2026-05-10"
+
+# ── Scope honesty (raw#10 C3) ─────────────────────────────
+[scope]
+honest_scope = "📱 5-verb application-prototypes substrate. Closed-form spec catalog for consumer-grade camera/identity/filter app prototypes. Reading the spec is grounded; shipping any of these as a real app requires UI, backend, distribution, and product work outside the scope of this catalog."
+not_scope = [
+    "Production app code (no Swift/Kotlin/RN sources)",
+    "App-store distribution / store-listing assets",
+    "Backend services / auth / payments",
+    "Sensory substrate (lives in hexa-senses)",
+    "Mental substrate (lives in hexa-mind)",
+]
+
+[cost]
+mac_local_default = "$0 (markdown spec library + .hexa CLI)"
+all_verbs         = "$0 (read-only)"
