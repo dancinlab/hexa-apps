@@ -7,6 +7,7 @@
 > theory. Sister-rollup of [hexa-mind](https://github.com/dancinlab/hexa-mind)
 > mental substrate, extracted from `canon@ded52144` on 2026-05-10.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20114975.svg)](https://doi.org/10.5281/zenodo.20114975)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-0.1.0-informational.svg)](hexa.toml)
 [![Verbs: 5](https://img.shields.io/badge/verbs-5_(apps)-blue.svg)](#verbs)
