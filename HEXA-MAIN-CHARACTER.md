@@ -1,3 +1,6 @@
+<!-- @canonical: canon@ded52144:domains/apps/hexa-main-character/hexa-main-character.md -->
+<!-- @extracted: 2026-05-10 -->
+<!-- @md5_at_extraction: 79af46ec078d7844817b2bb5473c68f7 -->
 <!-- gold-standard: shared/harness/sample.md -->
 <!-- @doc(type=paper) -->
 ---

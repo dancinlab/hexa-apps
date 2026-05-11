@@ -1,3 +1,6 @@
+<!-- @canonical: canon@ded52144:domains/apps/hexa-parallel-self/hexa-parallel-self.md -->
+<!-- @extracted: 2026-05-10 -->
+<!-- @md5_at_extraction: 3f3580222ccf3d6e220aed539497cdc2 -->
 <!-- gold-standard: shared/harness/sample.md -->
 <!-- @doc(type=paper) -->
 ---

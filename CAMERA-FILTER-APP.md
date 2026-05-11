@@ -1,3 +1,6 @@
+<!-- @canonical: canon@ded52144:domains/apps/camera-filter-app/camera-filter-app.md -->
+<!-- @extracted: 2026-05-10 -->
+<!-- @md5_at_extraction: 599bb2b92ac2ddb9fbb4d19e4950718a -->
 <!-- gold-standard: shared/harness/sample.md -->
 <!-- @doc(type=paper) -->
 ---

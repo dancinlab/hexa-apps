@@ -1,3 +1,6 @@
+<!-- @canonical: canon@ded52144:domains/apps/hexa-filter-algebra/hexa-filter-algebra.md -->
+<!-- @extracted: 2026-05-10 -->
+<!-- @md5_at_extraction: dcbf9c1b773f4736c6bddc77262b68dd -->
 <!-- gold-standard: shared/harness/sample.md -->
 <!-- @doc(type=paper) -->
 ---

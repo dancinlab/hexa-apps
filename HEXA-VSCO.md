@@ -1,3 +1,6 @@
+<!-- @canonical: canon@ded52144:domains/apps/hexa-vsco/hexa-vsco.md -->
+<!-- @extracted: 2026-05-10 -->
+<!-- @md5_at_extraction: 2c2fa93e5a040493f8d6623ea3ffa594 -->
 <!-- gold-standard: shared/harness/sample.md -->
 <!-- @doc(type=paper) -->
 ---
