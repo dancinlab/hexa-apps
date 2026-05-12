@@ -27,21 +27,6 @@ products.
 
 ---
 
-## Verbs
-
-| Verb                  | Spec                                                                       | Concern                                              | Provenance (canon@ded52144)                        |
-|-----------------------|----------------------------------------------------------------------------|------------------------------------------------------|----------------------------------------------------|
-| `camera_filter_app`   | [camera-filter-app/camera-filter-app.md](camera-filter-app/camera-filter-app.md)       | consumer camera filter app prototype                 | `domains/apps/camera-filter-app/`                  |
-| `hexa_filter_algebra` | [hexa-filter-algebra/hexa-filter-algebra.md](hexa-filter-algebra/hexa-filter-algebra.md) | 6-axis filter algebra (compositional ops)            | `domains/apps/hexa-filter-algebra/`                |
-| `hexa_main_character` | [hexa-main-character/hexa-main-character.md](hexa-main-character/hexa-main-character.md) | main-character mode identity app                     | `domains/apps/hexa-main-character/`                |
-| `hexa_parallel_self`  | [hexa-parallel-self/hexa-parallel-self.md](hexa-parallel-self/hexa-parallel-self.md)   | parallel-self identity multiplexer                   | `domains/apps/hexa-parallel-self/`                 |
-| `hexa_vsco`           | [hexa-vsco/hexa-vsco.md](hexa-vsco/hexa-vsco.md)                           | VSCO-style aesthetic filter app                      | `domains/apps/hexa-vsco/`                          |
-
-Each spec carries a `<!-- @canonical: canon@ded52144:domains/apps/<leaf>/<file>.md -->`
-provenance header — exact byte-MD5 at extraction time is recorded inline.
-
----
-
 ## n=6 master identity
 
 ```
