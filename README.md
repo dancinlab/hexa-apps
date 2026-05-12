@@ -61,25 +61,24 @@ provenance header — exact byte-MD5 at extraction time is recorded inline.
 
 ## Install
 
-### Via `hx` (works today)
-
 ```bash
-# `hx` does not auto-detect hexa.toml's `entry` field yet.
-hx install hexa-apps --entry cli/hexa-apps.hexa
-hexa-apps --version           # → 0.1.0
-hexa-apps selftest            # → 5/5 verb specs PASS
+# 1. Install hexa-lang (gives you `hexa` + `hx` package manager)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh)"
+
+# 2. Install hexa-apps
+hx install hexa-apps
 ```
 
-### CLI subcommands
+## Run
 
 ```bash
-hexa-apps camera_filter_app   # read camera-filter-app spec
-hexa-apps hexa_filter_algebra # 6-axis filter algebra
-hexa-apps hexa_main_character # main-character identity
-hexa-apps hexa_parallel_self  # parallel-self multiplexer
-hexa-apps hexa_vsco           # VSCO-style aesthetic filter
-hexa-apps list                # 5-verb table
-hexa-apps selftest            # 5/5 spec presence sweep
+hexa-apps camera_filter_app    # consumer camera filter app prototype
+hexa-apps hexa_filter_algebra  # 6-axis filter algebra
+hexa-apps hexa_main_character  # main-character mode identity app
+hexa-apps hexa_parallel_self   # parallel-self identity multiplexer
+hexa-apps hexa_vsco            # VSCO-style aesthetic filter app
+hexa-apps list                 # verb table + caveats
+hexa-apps selftest             # 5-verb spec presence sweep
 ```
 
 ---
