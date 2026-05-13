@@ -10,7 +10,9 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20114975.svg)](https://doi.org/10.5281/zenodo.20114975)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-0.1.0-informational.svg)](hexa.toml)
-[![Verbs: 5](https://img.shields.io/badge/verbs-5_(apps)-blue.svg)](#verbs)
+[![Verbs: 5 spec](https://img.shields.io/badge/verbs-5_spec-blue.svg)](#verbs)
+[![Verify: 4/4 PASS](https://img.shields.io/badge/verify-4%2F4_PASS-brightgreen.svg)](verify/run_all.hexa)
+[![Closure: 100%](https://img.shields.io/badge/closure-100%25-brightgreen.svg)](verify/run_all.hexa)
 [![n=6 lattice](https://img.shields.io/badge/n=6-σ·φ_=_n·τ_=_24-blue.svg)](#n6-master-identity)
 
 ---
@@ -74,6 +76,36 @@ hexa-apps selftest             # 5-verb spec presence sweep
 - 👁️ `hexa-senses` — sensory substrate (sister-rollup).
 
 Upstream concept SSOT: `canon/domains/apps/{camera-filter-app, hexa-filter-algebra, hexa-main-character, hexa-parallel-self, hexa-vsco}/`.
+
+---
+
+## Verify
+
+Sister-substrate `verify/run_all.hexa` aggregator pattern, scaled to
+spec-first scope. From the repo root:
+
+```bash
+hexa run verify/run_all.hexa     # exit 0 = all 4 scripts PASS
+```
+
+| script                            | what it checks                                                                                            |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `verify/spec_presence.hexa`       | all 5 verb spec docs present at declared paths                                                            |
+| `verify/lattice_arithmetic.hexa`  | n=6 self-consistency (σ·φ = n·τ = 24) — *aux only* per `LATTICE_POLICY.md` §1.3                           |
+| `verify/real_limits_anchor.hexa`  | `LIMIT_BREAKTHROUGH.md` anchors (Shannon · Nyquist · Landauer · Airy · TOPS · LPDDR5X · Li-ion · App-store) |
+| `verify/closure_consistency.hexa` | scoreboard cross-check (CLI · `hexa.toml` · README · `AGENTS.md`)                                         |
+
+Per `LATTICE_POLICY.md` §1.3, lattice-arithmetic identities are
+permitted only as auxiliary self-consistency checks; the substrate's
+real verification anchors live in `LIMIT_BREAKTHROUGH.md` (Shannon
+entropy / Nyquist–Shannon sampling / Landauer kT ln 2 / Rayleigh-Airy
+HARD walls + mobile-NPU TOPS / LPDDR5X / Li-ion / App-store engineering
+envelopes). Consumer-app over-claims are preserved verbatim as caveats:
+`§5.1 No "AGI camera"`, `§5.5 EMH-style ad-revenue honesty`,
+`§5.6 No n=6 magic`.
+
+**Closure: 100 %** — 4/4 verify scripts PASS, 5/5 verb specs present,
+`SPEC_CATALOG_ONLY` verdict preserved.
 
 ---
 

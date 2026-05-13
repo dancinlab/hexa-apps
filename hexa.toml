@@ -71,9 +71,11 @@ identity_modes    = 6                # main-character / parallel-self mode count
 verbs_total       = 5
 verbs_wired       = 0
 verbs_spec        = 5
-verifiers_pass    = "TBD (initial extraction)"
+verifiers_pass    = "4/4 (verify/run_all.hexa — spec_presence · lattice_arithmetic · real_limits_anchor · closure_consistency)"
 verdict           = "SPEC_CATALOG_ONLY"
+closure_percent   = 100
 extracted_from    = "canon@ded52144 on 2026-05-10"
+closure_wave      = "M (real-limits + spec-first verify), 2026-05-13"
 
 # ── Scope honesty (raw#10 C3) ─────────────────────────────
 [scope]

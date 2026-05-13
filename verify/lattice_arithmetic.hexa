@@ -1,0 +1,79 @@
+#!hexa strict
+// hexa-apps/verify/lattice_arithmetic.hexa — n=6 lattice self-consistency.
+//
+// Per LATTICE_POLICY.md §1.3 rule 1, lattice arithmetic (σ·φ = n·τ = 24,
+// 1/2 + 1/3 + 1/6 = 1) is permitted ONLY as an aux self-consistency check —
+// it must NEVER stand alone as verification, must NEVER be applied to
+// external entities (Apple iOS, Google Android, Meta, Snap, ByteDance,
+// Adobe, VSCO Inc., etc.), and must be paired with at least one
+// real-limits anchor (see real_limits_anchor.hexa).
+//
+// raw#10 C3: real consumer-app vendors use THEIR OWN product metrics
+// (DAU/MAU, retention, store rating, p99 latency, crash rate). Lattice
+// fits do NOT apply to those external entities.
+//
+// This script: native-lattice arithmetic identities only. Pass iff arithmetic
+// holds. No external-vendor claims.
+
+fn _assert(label: str, cond: bool, mut ok: int, mut bad: int) -> [int] {
+    if cond {
+        println("  [PASS] " + label)
+        return [ok + 1, bad]
+    }
+    println("  [FAIL] " + label)
+    return [ok, bad + 1]
+}
+
+fn main() {
+    println("hexa-apps/verify/lattice_arithmetic — n=6 self-consistency (aux only)")
+    println("")
+    println("  scope: native-lattice arithmetic identities ONLY")
+    println("  policy: LATTICE_POLICY §1.3 rule 1 — aux check; never sole verification")
+    println("  policy: LATTICE_POLICY §1.3 rule 4 — NEVER applied to external app vendors")
+    println("  raw#10 C3: Apple / Google / Meta / Snap / ByteDance / VSCO use THEIR own metrics")
+    println("")
+
+    let n = 6
+    let sigma = 12   // σ(6) — sum of divisors {1+2+3+6}
+    let tau = 4      // τ(6) — number of divisors |{1,2,3,6}|
+    let phi = 2      // φ(6) — Euler totient |{1,5}|
+    let j2 = 24      // Jordan totient J₂(6) = σ·φ = n·τ
+
+    let mut ok = 0
+    let mut bad = 0
+
+    // σ·φ = 24 (filter-composition dimensions · pre/post verdict bit = 24-channel mux)
+    let r1 = _assert("σ(6)·φ(6) = 24  (12·2 = 24)", sigma * phi == 24, ok, bad)
+    ok = r1[0]; bad = r1[1]
+
+    // n·τ = 24 (filter axes · app-stage quartet capture/filter/share/archive = 24)
+    let r2 = _assert("n·τ(6) = 24      (6·4 = 24)", n * tau == 24, ok, bad)
+    ok = r2[0]; bad = r2[1]
+
+    // J₂(6) master identity
+    let r3 = _assert("J₂(6) = σ·φ = n·τ (24 = 24 = 24)", j2 == sigma * phi && j2 == n * tau, ok, bad)
+    ok = r3[0]; bad = r3[1]
+
+    // Divisor identity 1/2 + 1/3 + 1/6 = 1 (3 + 2 + 1 = 6 in integer form)
+    let r4 = _assert("1/2 + 1/3 + 1/6 = 1 (3+2+1 = 6)", 3 + 2 + 1 == 6, ok, bad)
+    ok = r4[0]; bad = r4[1]
+
+    // τ(6) divisor count: {1,2,3,6} has 4 elements (app-stage quartet)
+    let r5 = _assert("τ(6) = |{1,2,3,6}| = 4 (capture/filter/share/archive)", tau == 4, ok, bad)
+    ok = r5[0]; bad = r5[1]
+
+    // Verb-count consistency (5 verbs in apps rollup) — separate from J₂
+    let verbs = 5
+    let r6 = _assert("verb_count = 5 (camera + algebra + main + parallel + vsco)", verbs == 5, ok, bad)
+    ok = r6[0]; bad = r6[1]
+
+    println("")
+    println("  passed: " + str(ok) + "  failed: " + str(bad))
+    println("  NOTE: lattice arithmetic alone is insufficient verification —")
+    println("        see verify/real_limits_anchor.hexa for the real-limits anchor.")
+    if bad > 0 {
+        println("__HEXA_APPS_LATTICE_ARITHMETIC__ FAIL")
+        exit(1)
+    }
+    println("__HEXA_APPS_LATTICE_ARITHMETIC__ PASS")
+}

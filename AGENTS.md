@@ -33,6 +33,23 @@ verification policy**: see [`LATTICE_POLICY.md`](LATTICE_POLICY.md)
 (companies, fabs, accelerators, life systems) must NOT include
 lattice-fit assertions. Use that entity's *own* invariants.
 
+## 🧪 Verify
+
+Closure runner (sister-substrate pattern):
+
+```bash
+hexa run verify/run_all.hexa     # exit 0 = all 4 scripts PASS
+```
+
+| script                            | what it checks                                                                                              |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `verify/spec_presence.hexa`       | all 5 verb spec docs present at declared paths                                                              |
+| `verify/lattice_arithmetic.hexa`  | n=6 self-consistency (σ·φ = n·τ = 24) — *aux only* per `LATTICE_POLICY.md` §1.3                             |
+| `verify/real_limits_anchor.hexa`  | `LIMIT_BREAKTHROUGH.md` anchors (Shannon · Nyquist · Landauer · Airy · TOPS · LPDDR5X · Li-ion · App-store) |
+| `verify/closure_consistency.hexa` | scoreboard cross-check (CLI · `hexa.toml` · README · `AGENTS.md`)                                           |
+
+Closure: 4/4 PASS / 100 % (Wave M, 2026-05-13).
+
 ## 🛠️ Commit conventions
 
 - Author: `박민우 <nerve011235@gmail.com>`
