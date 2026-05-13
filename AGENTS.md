@@ -52,7 +52,6 @@ Closure: 4/4 PASS / 100 % (Wave M, 2026-05-13).
 
 ## 🛠️ Commit conventions
 
-- Author: `박민우 <nerve011235@gmail.com>`
 - Trailer: `Co-Authored-By: <model> <noreply@anthropic.com>` (when AI-assisted)
 - Title format: `<type>(<scope>): <one-line summary>` per Conventional Commits
 - Body: bullet list of file changes + honesty caveats
