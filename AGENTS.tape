@@ -46,7 +46,7 @@
 @I id001 := "hexa-apps" :: identity-claim [d=2026-05-14 active]
   kind = "HEXA-Mobile family — apps · mobile"
   brief = "HEXA-Mobile family · apps · mobile"
-  parent = "dancinlab/echoes"
+  parent = "dancinlab"
 
 @L l1 := "repo-layout" :: structure [active]
   AGENTS.tape -> "this file · governance + identity (.tape v1.2)"
